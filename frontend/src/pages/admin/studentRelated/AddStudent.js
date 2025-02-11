@@ -18,9 +18,15 @@ const AddStudent = ({ situation }) => {
 
     const [name, setName] = useState('');
     const [rollNum, setRollNum] = useState('');
-    const [password, setPassword] = useState('')
-    const [className, setClassName] = useState('')
-    const [sclassName, setSclassName] = useState('')
+    const [password, setPassword] = useState('');
+    const [className, setClassName] = useState('');
+    const [sclassName, setSclassName] = useState('');
+    const [Birthday, setBirthday] = useState('');
+    const [Gender, setGender] = useState('');
+    const [Phone, setPhone] = useState('');
+    const [Email, setEmail] = useState('');
+    const [ParentName, setParentName] = useState('');
+    const [Address, setAddress] = useState('');
 
     const adminID = currentUser._id
     const role = "Student"
@@ -87,56 +93,145 @@ const AddStudent = ({ situation }) => {
     return (
         <>
             <div className="register">
-                <form className="registerForm" onSubmit={submitHandler}>
-                    <span className="registerTitle">Add Student</span>
-                    <label>Name</label>
-                    <input className="registerInput" type="text" placeholder="Enter student's name..."
-                        value={name}
-                        onChange={(event) => setName(event.target.value)}
-                        autoComplete="name" required />
+    <form className="registerForm" onSubmit={submitHandler}>
+    <br />
+    <br />
+  
 
-                    {
-                        situation === "Student" &&
-                        <>
-                            <label>Class</label>
-                            <select
-                                className="registerInput"
-                                value={className}
-                                onChange={changeHandler} required>
-                                <option value='Select Class'>Select Class</option>
-                                {sclassesList.map((classItem, index) => (
-                                    <option key={index} value={classItem.sclassName}>
-                                        {classItem.sclassName}
-                                    </option>
-                                ))}
-                            </select>
-                        </>
-                    }
+        <span className="registerTitle">Add Student</span>
 
-                    <label>Student num</label>
-                    <input className="registerInput" type="number" placeholder="Enter student's Roll Number..."
-                        value={rollNum}
-                        onChange={(event) => setRollNum(event.target.value)}
-                        required />
+        <label>Name</label>
+        <input className="registerInput" type="text" placeholder="Enter student's name..."
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+            autoComplete="name" required />
 
-                    <label>Password</label>
-                    <input className="registerInput" type="password" placeholder="Enter student's password..."
-                        value={password}
-                        onChange={(event) => setPassword(event.target.value)}
-                        autoComplete="new-password" required />
+        <label>Birthday</label>
+        <input className="registerInput" type="date"
+            value={Birthday}
+            onChange={(event) => setBirthday(event.target.value)}
+            required />
 
-                    <button className="registerButton" type="submit" disabled={loader}>
-                        {loader ? (
-                            <CircularProgress size={24} color="inherit" />
-                        ) : (
-                            'Add'
-                        )}
-                    </button>
-                </form>
-            </div>
+        <label>Gender</label>
+        <div className="genderOptions flex gap-4">
+    <label className="flex items-center gap-2 cursor-pointer">
+        <input
+            type="radio"
+            name="gender"
+            value="Male"
+            checked={Gender === "Male"}
+            onChange={(event) => setGender(event.target.value)}
+            className="hidden"
+        />
+        <div className={`w-5 h-5 rounded-full border-2 ${Gender === "Male" ? "bg-blue-500 border-blue-500" : "border-gray-400"}`}></div>
+        <span className="text-gray-700">Male</span>
+    </label>
+
+    <label className="flex items-center gap-2 cursor-pointer">
+        <input
+            type="radio"
+            name="gender"
+            value="Female"
+            checked={Gender === "Female"}
+            onChange={(event) => setGender(event.target.value)}
+            className="hidden"
+        />
+        <div className={`w-5 h-5 rounded-full border-2 ${Gender === "Female" ? "bg-pink-500 border-pink-500" : "border-gray-400"}`}></div>
+        <span className="text-gray-700">Female</span>
+    </label>
+
+    <label className="flex items-center gap-2 cursor-pointer">
+        <input
+            type="radio"
+            name="gender"
+            value="Other"
+            checked={Gender === "Other"}
+            onChange={(event) => setGender(event.target.value)}
+            className="hidden"
+        />
+        <div className={`w-5 h-5 rounded-full border-2 ${Gender === "Other" ? "bg-green-500 border-green-500" : "border-gray-400"}`}></div>
+        <span className="text-gray-700">Other</span>
+    </label>
+</div>
+
+
+        <label>Phone</label>
+        <input className="registerInput" type="tel" placeholder="Enter student's phone..."
+            value={Phone}
+            onChange={(event) => setPhone(event.target.value)}
+            required />
+
+        <label>Address</label>
+        <input className="registerInput" type="text" placeholder="Enter student's Address..."
+            value={Address}
+            onChange={(event) => setName(event.target.value)}
+            required />
+
+        <label>Email</label>
+        <input className="registerInput" type="email" placeholder="Enter student's email..."
+            value={Email}
+            onChange={(event) => setEmail(event.target.value)}
+            required />
+
+        <label>Parent Name</label>
+        <input className="registerInput" type="text" placeholder="Enter parent's name..."
+            value={ParentName}
+            onChange={(event) => setParentName(event.target.value)}
+            required />
+
+{
+    situation === "Student" && (
+        <>
+            <label>Class</label>
+            <select
+                className="registerInput"
+                value={className}
+                onChange={changeHandler}
+                required
+            >
+                <option value="">Select Class</option>
+                {sclassesList && sclassesList.length > 0 ? (
+                    sclassesList.map((classItem, index) => (
+                        <option key={index} value={classItem.sclassName}>
+                            {classItem.sclassName}
+                        </option>
+                    ))
+                ) : (
+                    <option disabled>Loading classes...</option>
+                )}
+            </select>
+        </>
+    )
+}
+
+
+
+        <label>Student Number</label>
+        <input className="registerInput" type="number" placeholder="Enter student's Roll Number..."
+            value={rollNum}
+            onChange={(event) => setRollNum(event.target.value)}
+            required />
+
+        <label>Password</label>
+        <input className="registerInput" type="password" placeholder="Enter student's password..."
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            autoComplete="new-password" required />
+
+        <button className="registerButton" type="submit" disabled={loader}>
+            {loader ? (
+                <CircularProgress size={24} color="inherit" />
+            ) : (
+                'Add'
+            )}
+        </button>
+    </form>
+</div>
+
             <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} />
         </>
     )
 }
 
 export default AddStudent
+

@@ -4,20 +4,47 @@ import { useSelector } from 'react-redux';
 // import Footer from "../components/Footer.js";
 
 
-export default function Profile() {
+export default function TProfile() {
   const { currentUser, response, error } = useSelector((state) => state.user);
   if (response) { console.log(response) }
   else if (error) { console.log(error) }
 
-  const sclassName = currentUser.sclassName;
-const studentSchool = currentUser.school;
-const Birthdate = currentUser.Birthdate;  // Assuming it's stored as a Date
-const Gender = currentUser.Gender;
-const Phone = currentUser.Phone;
-const Email = currentUser.Email;
-const ParentName = currentUser.ParentName;
+  const teachSclass = currentUser.teachSclass;
+const studentSchool = currentUser.school;  // Assuming it's stored as a Date
+const gender = currentUser.gender;
+const contact = currentUser.contact;
+const email = currentUser.email;
+const name = currentUser.name;
 const Address = currentUser.Address;
+
+const qualification = currentUser.qualification;
+
+const role = currentUser.role;
+
+const experience = currentUser.experience;
+const teachSubject = currentUser.teachSubject;
 const school = currentUser.school;
+const teacherId = currentUser.teacherId;
+
+
+
+
+// const getTeacherDetails = async (req, res) => {
+//   try {
+//       const teacher = await teacher.findById(req.params.id)
+//           .populate('teachSubject', 'subject') // Populate Subject Name
+//           .populate('teachSclass', 'sclass'); // Populate Class Name
+      
+//       if (!teacher) {
+//           return res.status(404).json({ message: "Teacher not found" });
+//       }
+
+//       res.json(teacher);
+//   } catch (error) {
+//       res.status(500).json({ message: "Server error", error });
+//   }
+// };
+
 
   return (
     <>
@@ -27,7 +54,7 @@ const school = currentUser.school;
             className="absolute top-0 w-full h-full bg-center bg-cover"
             style={{
               backgroundImage:
-                "url('https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2710&q=80')"
+                "url('https://media.istockphoto.com/id/2037760233/vector/colorful-seamless-pattern-with-daycare-doodle-book-hopscotch-toys-flower-umbrella-house.jpg?s=2048x2048&w=is&k=20&c=Y_uKYLEYPltygMAJcERwvsTUmPTNIuImgYHy0vFPQBI=')"
             }}
           >
             <span
@@ -75,16 +102,36 @@ const school = currentUser.school;
                 </tr>
               </thead>
               <tbody>
+
+              
+
+                <tr className="border-b">
+                  <td className="px-6 py-4 text-gray-600 font-semibold">
+                    <div className="flex items-center">
+                      Role/Possition:
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 text-gray-500">{currentUser.role}</td>
+                </tr>
+
                 {/* Class Name */}
                 <tr className="border-b">
                   <td className="px-6 py-4 text-gray-600 font-semibold">Class:</td>
-                  <td className="px-6 py-4 text-gray-500">{sclassName.sclassName}</td>
+                  <td className="px-6 py-4 text-gray-500">{teachSclass.sclassName}</td>
                 </tr>
+
+
+                <tr className="border-b">
+                  <td className="px-6 py-4 text-gray-600 font-semibold">Subject:</td>
+                  <td className="px-6 py-4 text-gray-500">{teachSubject.subName}</td>
+                </tr>
+
+            
 
                 {/* Student Number */}
                 <tr className="border-b">
-                  <td className="px-6 py-4 text-gray-600 font-semibold">Student No:</td>
-                  <td className="px-6 py-4 text-gray-500">{currentUser.rollNum}</td>
+                  <td className="px-6 py-4 text-gray-600 font-semibold">Teacher ID:</td>
+                  <td className="px-6 py-4 text-gray-500">{currentUser.teacherId}</td>
                 </tr>
 
                 {/* Address */}
@@ -92,22 +139,32 @@ const school = currentUser.school;
                   <td className="px-6 py-4 text-gray-600 font-semibold">
                     <div className="flex items-center">
                       <i className="fas fa-map-marker-alt mr-2 text-lg text-gray-500"></i>
-                      Address:
+                      Contact Number:
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-gray-500">{currentUser.Address}</td>
+                  <td className="px-6 py-4 text-gray-500">{currentUser.contact}</td>
                 </tr>
 
                 {/* Birthdate */}
                 <tr className="border-b">
                   <td className="px-6 py-4 text-gray-600 font-semibold">
                     <div className="flex items-center">
-                      <i className="fas fa-birthday-cake mr-2 text-lg text-gray-500"></i>
-                      Birth Date:
+                      Qualifications:
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-gray-500">{currentUser.Birthdate}</td>
+                  <td className="px-6 py-4 text-gray-500">{currentUser.qualifications}</td>
                 </tr>
+
+
+                <tr className="border-b">
+                  <td className="px-6 py-4 text-gray-600 font-semibold">
+                    <div className="flex items-center">
+                      Experiences:
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 text-gray-500">{currentUser.experience}</td>
+                </tr>
+
 
                 {/* Email */}
                 <tr className="border-b">
@@ -117,7 +174,7 @@ const school = currentUser.school;
                       Email:
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-gray-500">{currentUser.Email}</td>
+                  <td className="px-6 py-4 text-gray-500">{currentUser.email}</td>
                 </tr>
 
                 {/* Gender */}
@@ -128,27 +185,7 @@ const school = currentUser.school;
                       Gender:
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-gray-500">{currentUser.Gender}</td>
-                </tr>
-                {/* parent */}
-                <tr>
-                  <td className="px-6 py-4 text-gray-600 font-semibold">
-                    <div className="flex items-center">
-                      <i className="fas fa-genderless mr-2 text-lg text-gray-500"></i>
-                      Parent Name:
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 text-gray-500">{currentUser.ParentName}</td>
-                </tr>
-                {/* School */}
-                <tr>
-                  <td className="px-6 py-4 text-gray-600 font-semibold">
-                    <div className="flex items-center">
-                      <i className="fas fa-genderless mr-2 text-lg text-gray-500"></i>
-                      School:
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 text-gray-500">{school.schoolName}</td>
+                  <td className="px-6 py-4 text-gray-500">{currentUser.gender}</td>
                 </tr>
               </tbody>
             </table>

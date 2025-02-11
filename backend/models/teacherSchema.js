@@ -5,6 +5,26 @@ const teacherSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    teacherId: {
+        type: String,
+        required: true,
+    },
+    experience: {
+        type: String,
+        required: true,
+    },
+    qualifications: {
+        type: String,
+        required: true,
+    },
+    contact: {
+        type: String,
+        required: true,
+    },
+    gender: {
+        type: String,
+        required: true,
+    },
     email: {
         type: String,
         unique: true,

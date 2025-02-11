@@ -4,9 +4,11 @@ const Subject = require('../models/subjectSchema.js');
 
 const studentRegister = async (req, res) => {
     try {
+        // Hash the password for security
         const salt = await bcrypt.genSalt(10);
         const hashedPass = await bcrypt.hash(req.body.password, salt);
 
+        // Check if the student with the same roll number already exists in the same school and class
         const existingStudent = await Student.findOne({
             rollNum: req.body.rollNum,
             school: req.body.adminID,
@@ -14,24 +16,35 @@ const studentRegister = async (req, res) => {
         });
 
         if (existingStudent) {
-            res.send({ message: 'Roll Number already exists' });
+            return res.status(400).json({ message: 'Roll Number already exists' });
         }
-        else {
-            const student = new Student({
-                ...req.body,
-                school: req.body.adminID,
-                password: hashedPass
-            });
 
-            let result = await student.save();
+        // Create a new student object
+        const student = new Student({
+            name: req.body.name,
+            rollNum: req.body.rollNum,
+            password: hashedPass,
+            className: req.body.className,
+            sclassName: req.body.sclassName,
+            school: req.body.adminID,
+            Birthdate: req.body.Birthdate ? new Date(req.body.Birthdate) : undefined, // Convert to Date
+            Gender: req.body.Gender,
+            Phone: req.body.Phone,
+            Email: req.body.Email,
+            ParentName: req.body.ParentName,
+            Address: req.body.Address,
+        });
 
-            result.password = undefined;
-            res.send(result);
-        }
+        // Save the student to the database
+        let result = await student.save();
+        result.password = undefined; // Remove password from the response for security
+
+        res.status(201).json(result);
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json({ error: err.message });
     }
 };
+
 
 const studentLogIn = async (req, res) => {
     try {
