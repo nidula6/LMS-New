@@ -92,11 +92,18 @@ const AddStudent = ({ situation }) => {
 
     return (
         <>
+        <br />
+    <br />
+    <br />
+    <br /><br />
             <div className="register">
     <form className="registerForm" onSubmit={submitHandler}>
     <br />
     <br />
-  
+    <br />
+    <br /><br />
+    <br /><br />
+    <br />
 
         <span className="registerTitle">Add Student</span>
 
@@ -164,7 +171,7 @@ const AddStudent = ({ situation }) => {
         <label>Address</label>
         <input className="registerInput" type="text" placeholder="Enter student's Address..."
             value={Address}
-            onChange={(event) => setName(event.target.value)}
+            onChange={(event) => setAddress(event.target.value)}
             required />
 
         <label>Email</label>
@@ -180,51 +187,42 @@ const AddStudent = ({ situation }) => {
             required />
 
 {
-    situation === "Student" && (
-        <>
-            <label>Class</label>
-            <select
-                className="registerInput"
-                value={className}
-                onChange={changeHandler}
-                required
-            >
-                <option value="">Select Class</option>
-                {sclassesList && sclassesList.length > 0 ? (
-                    sclassesList.map((classItem, index) => (
-                        <option key={index} value={classItem.sclassName}>
-                            {classItem.sclassName}
-                        </option>
-                    ))
-                ) : (
-                    <option disabled>Loading classes...</option>
-                )}
-            </select>
-        </>
-    )
-}
+                        situation === "Student" &&
+                        <>
+                            <label>Class</label>
+                            <select
+                                className="registerInput"
+                                value={className}
+                                onChange={changeHandler} required>
+                                <option value='Select Class'>Select Class</option>
+                                {sclassesList.map((classItem, index) => (
+                                    <option key={index} value={classItem.sclassName}>
+                                        {classItem.sclassName}
+                                    </option>
+                                ))}
+                            </select>
+                        </>
+                    }
 
+                    <label>Student num</label>
+                    <input className="registerInput" type="number" placeholder="Enter student's Roll Number..."
+                        value={rollNum}
+                        onChange={(event) => setRollNum(event.target.value)}
+                        required />
 
+                    <label>Password</label>
+                    <input className="registerInput" type="password" placeholder="Enter student's password..."
+                        value={password}
+                        onChange={(event) => setPassword(event.target.value)}
+                        autoComplete="new-password" required />
 
-        <label>Student Number</label>
-        <input className="registerInput" type="number" placeholder="Enter student's Roll Number..."
-            value={rollNum}
-            onChange={(event) => setRollNum(event.target.value)}
-            required />
-
-        <label>Password</label>
-        <input className="registerInput" type="password" placeholder="Enter student's password..."
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            autoComplete="new-password" required />
-
-        <button className="registerButton" type="submit" disabled={loader}>
-            {loader ? (
-                <CircularProgress size={24} color="inherit" />
-            ) : (
-                'Add'
-            )}
-        </button>
+                    <button className="registerButton" type="submit" disabled={loader}>
+                        {loader ? (
+                            <CircularProgress size={24} color="inherit" />
+                        ) : (
+                            'Add'
+                        )}
+                    </button>
     </form>
 </div>
 

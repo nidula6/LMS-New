@@ -42,7 +42,6 @@ const studentSchema = new mongoose.Schema({
     },
     Phone: {
         type: Number,
-        default: "+9471-111-111"
     },
     Email: {
         type: String,

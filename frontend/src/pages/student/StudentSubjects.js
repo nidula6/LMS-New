@@ -4,15 +4,16 @@ import { getSubjectList } from '../../redux/sclassRelated/sclassHandle';
 import { BottomNavigation, BottomNavigationAction, Container, Paper, Table, TableBody, TableHead, Typography } from '@mui/material';
 import { getUserDetails } from '../../redux/userRelated/userHandle';
 import CustomBarChart from '../../components/CustomBarChart'
-
+import { Box,Button} from '@mui/material';
 import InsertChartIcon from '@mui/icons-material/InsertChart';
 import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
 import TableChartIcon from '@mui/icons-material/TableChart';
 import TableChartOutlinedIcon from '@mui/icons-material/TableChartOutlined';
 import { StyledTableCell, StyledTableRow } from '../../components/styles';
+import { useNavigate } from 'react-router-dom';
 
 const StudentSubjects = () => {
-
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { subjectsList, sclassDetails } = useSelector((state) => state.sclass);
     const { userDetails, currentUser, loading, response, error } = useSelector((state) => state.user);
@@ -34,7 +35,7 @@ const StudentSubjects = () => {
     }, [userDetails])
 
     useEffect(() => {
-        if (subjectMarks === []) {
+        if (subjectMarks.length === 0) { //changed subjectMarks === []
             dispatch(getSubjectList(currentUser.sclassName._id, "ClassSubjects"));
         }
     }, [subjectMarks, dispatch, currentUser.sclassName._id]);
@@ -81,6 +82,18 @@ const StudentSubjects = () => {
     const renderClassDetailsSection = () => {
         return (
             <Container>
+
+<Box sx={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 2 }}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={() => navigate("/Student/subjects/assignment")}
+                        >
+                            View Assignments
+                        </Button>
+                    </Box>
+
+
                 <Typography variant="h4" align="center" gutterBottom>
                     Class Details
                 </Typography>

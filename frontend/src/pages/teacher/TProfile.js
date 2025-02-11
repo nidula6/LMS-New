@@ -54,7 +54,7 @@ const teacherId = currentUser.teacherId;
             className="absolute top-0 w-full h-full bg-center bg-cover"
             style={{
               backgroundImage:
-                "url('https://media.istockphoto.com/id/2037760233/vector/colorful-seamless-pattern-with-daycare-doodle-book-hopscotch-toys-flower-umbrella-house.jpg?s=2048x2048&w=is&k=20&c=Y_uKYLEYPltygMAJcERwvsTUmPTNIuImgYHy0vFPQBI=')"
+                "url('https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2710&q=80')"
             }}
           >
             <span
@@ -117,13 +117,13 @@ const teacherId = currentUser.teacherId;
                 {/* Class Name */}
                 <tr className="border-b">
                   <td className="px-6 py-4 text-gray-600 font-semibold">Class:</td>
-                  <td className="px-6 py-4 text-gray-500">{teachSclass.sclassName}</td>
+                  <td className="px-6 py-4 text-gray-500">{teachSclass?.sclassName || "N/A"}</td>
                 </tr>
 
 
                 <tr className="border-b">
                   <td className="px-6 py-4 text-gray-600 font-semibold">Subject:</td>
-                  <td className="px-6 py-4 text-gray-500">{teachSubject.subName}</td>
+                  <td className="px-6 py-4 text-gray-500">{teachSubject?.subName || "N/A"}</td>
                 </tr>
 
             
