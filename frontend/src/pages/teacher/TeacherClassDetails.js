@@ -107,15 +107,7 @@ const TeacherClassDetails = () => {
                     </Typography>
 
                     {/* "Add Assignment" Button */}
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 2 }}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={() => navigate("/Teacher/class/assignment")}
-                        >
-                            Add Assignment
-                        </Button>
-                    </Box>
+                    
 
                     {getresponse ? (
                         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
@@ -126,6 +118,16 @@ const TeacherClassDetails = () => {
                             <Typography variant="h5" gutterBottom>
                                 Students List:
                             </Typography>
+                            <Box sx={{ display: 'flex', justifyContent: 'flex-start', marginBottom: 2 }}>
+    <Button
+        variant="contained"
+        color="primary"
+        onClick={() => navigate("/Teacher/class/assignment")}
+        sx={{ fontSize: '1.2rem', padding: '10px 20px' }} // Increase font size and padding
+    >
+        Add Assignment
+    </Button>
+</Box>
                             {Array.isArray(sclassStudents) && sclassStudents.length > 0 && (
                                 <TableTemplate buttonHaver={StudentsButtonHaver} columns={studentColumns} rows={studentRows} />
                             )}

@@ -71,6 +71,7 @@ const StudentDashboard = () => {
                         <StudentSideBar />
                     </List>
                 </Drawer>
+                
                 <Box component="main" sx={styles.boxStyled}>
                     <Toolbar />
                     <Routes>

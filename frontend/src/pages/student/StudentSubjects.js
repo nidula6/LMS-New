@@ -44,33 +44,83 @@ const StudentSubjects = () => {
         setSelectedSection(newSection);
     };
 
+    const renderClassDetailsSection = () => {
+        return (
+            <Container>
+                
+                
+<div className="p-6 bg-white shadow-lg rounded-2xl max-w-3xl mx-auto">
+      <div className="flex justify-end mb-4">
+        
+      </div>
+      
+      <h2 className="text-3xl font-bold text-center mb-4 text-gray-700">Class Details</h2>
+      <Button
+          onClick={() => navigate("/Student/subjects/assignment")}
+          className="bg-red-700 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+        >
+          View Assignments
+        </Button>
+      <h3 className="text-xl font-semibold mb-2 text-gray-800">You are currently in Class {sclassDetails?.sclassName}</h3>
+      <h4 className="text-lg font-medium mb-2 text-gray-700">And these are the subjects:</h4>
+      <ul className="list-disc pl-6 text-gray-700">
+        {subjectsList?.map((subject, index) => (
+          <li key={index} className="py-1">
+            {subject.subName} ({subject.subCode})
+          </li>
+        ))}
+      </ul>
+      <h2 className="text-2xl font-bold text-center mt-6 mb-4 text-gray-700">Subject Marks</h2>
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse bg-gray-50 rounded-lg overflow-hidden shadow-md">
+          <thead className="bg-blue-500 text-white">
+            <tr>
+              <th className="p-3 text-left">Subject</th>
+              <th className="p-3 text-left">Marks</th>
+            </tr>
+          </thead>
+          <tbody>
+            {subjectMarks.map((result, index) => (
+              result.subName && result.marksObtained ? (
+                <tr key={index} className="border-b border-gray-200 hover:bg-gray-100">
+                  <td className="p-3 text-gray-700">{result.subName.subName}</td>
+                  <td className="p-3 text-gray-700">{result.marksObtained}</td>
+                </tr>
+              ) : null
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+            </Container>
+        );
+    };
     const renderTableSection = () => {
         return (
             <>
-                <Typography variant="h4" align="center" gutterBottom>
-                    Subject Marks
-                </Typography>
-                <Table>
-                    <TableHead>
-                        <StyledTableRow>
-                            <StyledTableCell>Subject</StyledTableCell>
-                            <StyledTableCell>Marks</StyledTableCell>
-                        </StyledTableRow>
-                    </TableHead>
-                    <TableBody>
-                        {subjectMarks.map((result, index) => {
-                            if (!result.subName || !result.marksObtained) {
-                                return null;
-                            }
-                            return (
-                                <StyledTableRow key={index}>
-                                    <StyledTableCell>{result.subName.subName}</StyledTableCell>
-                                    <StyledTableCell>{result.marksObtained}</StyledTableCell>
-                                </StyledTableRow>
-                            );
-                        })}
-                    </TableBody>
-                </Table>
+                <div className="p-6 bg-white shadow-lg rounded-2xl max-w-3xl mx-auto">
+      <h2 className="text-2xl font-bold text-center mb-4 text-gray-700">Subject Marks</h2>
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse bg-gray-50 rounded-lg overflow-hidden shadow-md">
+          <thead className="bg-blue-500 text-white">
+            <tr>
+              <th className="p-3 text-left">Subject</th>
+              <th className="p-3 text-left">Marks</th>
+            </tr>
+          </thead>
+          <tbody>
+            {subjectMarks.map((result, index) => (
+              result.subName && result.marksObtained ? (
+                <tr key={index} className="border-b border-gray-200 hover:bg-gray-100">
+                  <td className="p-3 text-gray-700">{result.subName.subName}</td>
+                  <td className="p-3 text-gray-700">{result.marksObtained}</td>
+                </tr>
+              ) : null
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
             </>
         );
     };
@@ -79,41 +129,6 @@ const StudentSubjects = () => {
         return <CustomBarChart chartData={subjectMarks} dataKey="marksObtained" />;
     };
 
-    const renderClassDetailsSection = () => {
-        return (
-            <Container>
-
-<Box sx={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 2 }}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={() => navigate("/Student/subjects/assignment")}
-                        >
-                            View Assignments
-                        </Button>
-                    </Box>
-
-
-                <Typography variant="h4" align="center" gutterBottom>
-                    Class Details
-                </Typography>
-                <Typography variant="h5" gutterBottom>
-                    You are currently in Class {sclassDetails && sclassDetails.sclassName}
-                </Typography>
-                <Typography variant="h6" gutterBottom>
-                    And these are the subjects:
-                </Typography>
-                {subjectsList &&
-                    subjectsList.map((subject, index) => (
-                        <div key={index}>
-                            <Typography variant="subtitle1">
-                                {subject.subName} ({subject.subCode})
-                            </Typography>
-                        </div>
-                    ))}
-            </Container>
-        );
-    };
 
     return (
         <>
@@ -121,11 +136,21 @@ const StudentSubjects = () => {
                 <div>Loading...</div>
             ) : (
                 <div>
-                    {subjectMarks && Array.isArray(subjectMarks) && subjectMarks.length > 0
-                        ?
-                        (<>
-                            {selectedSection === 'table' && renderTableSection()}
+                    <>
+                            {renderClassDetailsSection()}
+                        {<br />}
+                        {<br />}
+                        {<br />}
+                            
                             {selectedSection === 'chart' && renderChartSection()}
+                            {<br />}
+                            {<br />}
+                            {<br />}
+                            {<br />}
+                            {<br />}
+                            {<br />}
+                            {<br />}
+                            {<br />}
 
                             <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
                                 <BottomNavigation value={selectedSection} onChange={handleSectionChange} showLabels>
@@ -141,12 +166,10 @@ const StudentSubjects = () => {
                                     />
                                 </BottomNavigation>
                             </Paper>
-                        </>)
-                        :
-                        (<>
-                            {renderClassDetailsSection()}
-                        </>)
-                    }
+                        </>
+                        
+                        
+                    
                 </div>
             )}
         </>
