@@ -1,4 +1,6 @@
-import { useEffect } from 'react';
+
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { getAllStudents } from '../../../redux/studentRelated/studentHandle';
@@ -25,6 +27,99 @@ import MenuList from '@mui/material/MenuList';
 import Popup from '../../../components/Popup';
 
 const ShowStudents = () => {
+
+    const [payments, setPayments] = useState([]);
+
+
+    // Styles
+    const containerStyle = {
+        margin: '20px',
+        fontFamily: 'Arial, sans-serif',
+        color: '#333'
+    };
+
+    const headingStyle = {
+        textAlign: 'center',
+        color: '#333',
+        fontWeight: 'bold' // Adds bold styling
+    };
+
+    const formStyle = {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '15px',
+        maxWidth: '600px',
+        margin: '0 auto',
+        padding: '20px',
+        border: '1px solid #ddd',
+        borderRadius: '8px',
+        backgroundColor: '#f9f9f9'
+    };
+
+    const inputStyle = {
+        width: '100%',
+        padding: '10px',
+        borderRadius: '5px',
+        border: '1px solid #ddd',
+        fontSize: '16px',
+        marginBottom: '10px'
+    };
+
+    const buttonStyle = {
+        backgroundColor: '#4CAF50',
+        color: 'white',
+        padding: '12px 20px',
+        border: 'none',
+        borderRadius: '5px',
+        fontSize: '16px',
+        cursor: 'pointer',
+        transition: 'background-color 0.3s'
+    };
+
+    const buttonHoverStyle = {
+        backgroundColor: '#45a049'
+    };
+
+    const tableStyle = {
+        width: '100%',
+        marginTop: '30px',
+        borderCollapse: 'collapse',
+        textAlign: 'left',
+        fontSize: '14px'
+    };
+
+    const thStyle = {
+        padding: '12px 15px',
+        border: '1px solid #ddd',
+        backgroundColor: '#f2f2f2',
+        textAlign: 'center'
+    };
+
+    const tdStyle = {
+        padding: '12px 15px',
+        border: '1px solid #ddd',
+        textAlign: 'center'
+    };
+
+    const trEvenStyle = {
+        backgroundColor: '#f9f9f9'
+    };
+
+    const trHoverStyle = {
+        backgroundColor: '#f1f1f1'
+    };
+
+    const linkStyle = {
+        textDecoration: 'none',
+        color: 'blue',
+        fontWeight: 'bold'
+    };
+
+    const linkHoverStyle = {
+        textDecoration: 'underline'
+    };
+
 
     const navigate = useNavigate()
     const dispatch = useDispatch();
@@ -108,6 +203,21 @@ const ShowStudents = () => {
 
             setOpen(false);
         };
+
+        
+    useEffect(() => {
+        const fetchPayments = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/studentpayments');
+                setPayments(response.data);
+            } catch (error) {
+                console.error('Error fetching assignments:', error);
+            }
+        };
+  
+        fetchPayments();
+    }, []);
+
         return (
             <>
                 <IconButton onClick={() => deleteHandler(row.id, "Student")}>
@@ -204,9 +314,81 @@ const ShowStudents = () => {
                             <SpeedDialTemplate actions={actions} />
                         </Paper>
                     }
+                    {/* Heading */}
+                    <br />
+
+                    
+      <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
+        Student Payment Details
+      </h2>
+
+      {/* No Assignments Message */}
+      {payments.length === 0 ? (
+        <p className="text-gray-600 text-center">No Payments available</p>
+      ) : (
+       
+          <table className="w-full border-collapse bg-gray-50 shadow-md rounded-lg overflow-hidden">
+            {/* Table Header */}
+            <thead className="bg-blue-600 text-white">
+              <tr>
+                <th className="p-3 text-left">Title</th>
+                <th className="p-3 text-left">Description</th>
+                <th className="p-3 text-left">Student</th>
+                <th className="p-3 text-left">Upload Date</th>
+                <th className="p-3 text-left">Download Payment Slip</th>
+              </tr>
+            </thead>
+
+            {/* Table Body */}
+            <tbody>
+              {payments.map((payment, index) => (
+                <tr
+                  key={payment._id}
+                  className={`border-b border-gray-200 hover:bg-gray-100 ${
+                    index % 2 === 0 ? "bg-gray-100" : "bg-white"
+                  }`}
+                >
+                  <td className="p-3 text-gray-800">{payment.title}</td>
+                  <td className="p-3 text-gray-600">
+                    {payment.description || "No description"}
+                  </td>
+                  <td className="p-3 text-gray-800">
+                    {payment.studentId?.name || "Unknown"}
+                  </td>
+                  <td className="p-3 text-gray-700">
+                    {new Date(payment.createdAt).toLocaleDateString()}
+                  </td>
+                  <td className="p-3">
+                    {payment.fileUrl ? (
+                      <a
+                        href={`http://localhost:5000${payment.fileUrl}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 font-semibold hover:underline"
+                      >
+                        📂 View
+                      </a>
+                    ) : (
+                      <span className="text-gray-500">No file</span>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        
+
+        
+            )}
                 </>
             }
             <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} />
+
+            {/* ---------------------------- */}
+
+            
+      
+        
         </>
     );
 };

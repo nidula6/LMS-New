@@ -9,6 +9,9 @@ const UploadAssignment = () => {
 
     const [assignments, setAssignments] = useState([]);
 
+    const [payments, setPayments] = useState([]);
+
+
     // Styles
     const containerStyle = {
         margin: '20px',
@@ -163,6 +166,8 @@ const UploadAssignment = () => {
         fetchAssignments();
     }, []);
 
+    
+
     return (
         <div style={containerStyle}>
             <h2 style={headingStyle}>Upload Assignment</h2>
@@ -255,8 +260,11 @@ const UploadAssignment = () => {
             </tbody>
           </table>
         </div>
+
+        
             )}
         </div>
+        
         </div>
     );
 };

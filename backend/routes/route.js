@@ -1,9 +1,11 @@
 const router = require('express').Router();
 const assignmentController = require('../controllers/assignment-controller'); 
-const assignment2Controller = require('../controllers/assignment2-controller')
+const assignment2Controller = require('../controllers/assignment2-controller');
+const paymentcontroller = require('../controllers/payment-controller')
 
 const upload = assignmentController.upload;
-const supload = assignment2Controller.supload; // Corrected import
+const supload = assignment2Controller.supload;
+const spayment = paymentcontroller.spayment; // Corrected import
 
 
 // const { adminRegister, adminLogIn, deleteAdmin, getAdminDetail, updateAdmin } = require('../controllers/admin-controller.js');
@@ -140,6 +142,8 @@ router.post('/assignments/supload', supload.single('file'), assignment2Controlle
 // 🔹 Route to fetch all assignments (for teachers)
 router.get('/studentassignments', assignment2Controller.getAssignments);
 
+router.post('/payment/spayment', spayment.single('file'), paymentcontroller.uploadPayment);
 
+router.get('/studentpayments', paymentcontroller.getPayment);
 
 module.exports = router;

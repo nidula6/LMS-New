@@ -1,28 +1,28 @@
 const mongoose = require('mongoose');
-const Assignment = require('../models/AssignmentSchema');
-
 const multer = require('multer');
+
+const Payment = require('../models/paymentSchema');
 
 // Configure Multer for file uploads
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'upload/'); // Ensure this folder exists
+        cb(null, 'uploadPayment/'); // Ensure this folder exists
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + '-' + file.originalname);
     }
 });
 
-const upload = multer({ storage: storage });
+const spayment = multer({ storage: storage });
 
 // ✅ Upload assignment
-exports.uploadAssignment = async (req, res) => {
+exports.uploadPayment = async (req, res) => {
     try {
-        const { title, description, teacherId } = req.body; // Ensure teacherId is included
+        const { title, description, studentId } = req.body;
 
-        // ✅ Validate teacherId
-        if (!mongoose.Types.ObjectId.isValid(teacherId)) {
-            return res.status(400).json({ error: 'Invalid teacher ID' });
+        // ✅ Validate studentId
+        if (!mongoose.Types.ObjectId.isValid(studentId)) {
+            return res.status(400).json({ error: 'Invalid student ID' });
         }
 
         // ✅ Ensure file exists
@@ -30,19 +30,18 @@ exports.uploadAssignment = async (req, res) => {
             return res.status(400).json({ error: 'File is required' });
         }
 
-        const fileUrl = `/upload/${req.file.filename}`;
+        const fileUrl = `/uploadPayment/${req.file.filename}`;
 
-        
-        const newAssignment = new Assignment({
+        const newPayment = new payment({
             title,
             description,
             fileUrl,
-            teacherId: new mongoose.Types.ObjectId(teacherId) // Convert to ObjectId
+            studentId: new mongoose.Types.ObjectId(studentId)
         });
 
-        await newAssignment.save();
+        await newPayment.save();
 
-        res.status(201).json({ message: 'Assignment uploaded successfully', assignment: newAssignment });
+        res.status(201).json({ message: 'Payment Slip uploaded successfully', payment: newPayment });
     } catch (error) {
         console.error('Error uploading assignment:', error);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -50,20 +49,6 @@ exports.uploadAssignment = async (req, res) => {
 };
 
 // ✅ Fetch assignments
-exports.getAssignments = async (req, res) => {
-    try {
-        const assignments = await Assignment.find()
-            .populate('teacherId', 'name'); // Fetch teacher's name
-
-        res.status(200).json(assignments);
-    } catch (error) {
-        console.error('Error fetching assignments:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-};
-
-
- // Ensure this is correctly imported
 
 // exports.getPayment = async (req, res) => {
 //     try {
@@ -79,4 +64,19 @@ exports.getAssignments = async (req, res) => {
 // };
 
 
-module.exports.upload = upload;
+exports.getPayment = async (req, res) => {
+    try {
+        // Fetch all payments and populate studentId with the student's name
+        const payments = await Payment.find()
+            .populate('studentId', 'name'); // Fetch student's name
+
+        res.status(200).json(payments); // Send payments back as a JSON response
+    } catch (error) {
+        console.error('Error fetching payments:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
+module.exports.spayment = spayment;
+ 

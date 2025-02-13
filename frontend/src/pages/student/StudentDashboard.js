@@ -22,6 +22,9 @@ import AccountMenu from '../../components/AccountMenu';
 import { AppBar, Drawer } from '../../components/styles';
 import StudentAssignment from './StudentAssignment';
 
+import Payment from './Payment';
+
+
 import Profile from "./Profile";  
 
 const StudentDashboard = () => {
@@ -85,6 +88,7 @@ const StudentDashboard = () => {
                         <Route path="/Student/attendance" element={<ViewStdAttendance />} />
                         <Route path="/Student/complain" element={<StudentComplain />} />
                         <Route path="/Student/subjects/assignment" element={<StudentAssignment/>} />
+                        <Route path="/Student/payment" element={<Payment/>} />
 
                         <Route path="/logout" element={<Logout />} />
                     </Routes>

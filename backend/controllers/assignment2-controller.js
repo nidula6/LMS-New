@@ -60,5 +60,19 @@ exports.getAssignments = async (req, res) => {
     }
 };
 
+
+exports.getPayment = async (req, res) => {
+    try {
+        const payments = await payments.find()
+            .populate('studentId', 'name'); // Fetch student's name
+
+        res.status(200).json(payments);
+    } catch (error) {
+        console.error('Error fetching assignments:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
 module.exports.supload = supload;
  

@@ -53,6 +53,13 @@ const StudentSideBar = () => {
                 <ListItemText primary="Profile" />
              </ListItemButton>
 
+             <ListItemButton component={Link} to="/Student/payment">
+                <ListItemIcon>
+                    <AccountCircleOutlinedIcon color={location.pathname.startsWith("/Student/payment") ? 'primary' : 'inherit'} />
+                </ListItemIcon>
+                <ListItemText primary="Payment" />
+             </ListItemButton>
+
                 <ListItemButton component={Link} to="/logout">
                     <ListItemIcon>
                         <ExitToAppIcon color={location.pathname.startsWith("/logout") ? 'primary' : 'inherit'} />
