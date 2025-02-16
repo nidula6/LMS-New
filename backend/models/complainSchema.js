@@ -17,7 +17,6 @@ const complainSchema = new mongoose.Schema({
     school: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'admin',
-        required: true,
     }
 });
 

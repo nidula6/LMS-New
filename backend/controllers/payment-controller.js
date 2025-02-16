@@ -32,7 +32,7 @@ exports.uploadPayment = async (req, res) => {
 
         const fileUrl = `/uploadPayment/${req.file.filename}`;
 
-        const newPayment = new payment({
+        const newPayment = new Payment({
             title,
             description,
             fileUrl,

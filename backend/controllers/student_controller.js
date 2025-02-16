@@ -44,29 +44,47 @@ const studentRegister = async (req, res) => {
     }
 };
 
-
 const studentLogIn = async (req, res) => {
     try {
-        let student = await Student.findOne({ rollNum: req.body.rollNum, name: req.body.studentName });
-        if (student) {
-            const validated = await bcrypt.compare(req.body.password, student.password);
-            if (validated) {
-                student = await student.populate("school", "schoolName")
-                student = await student.populate("sclassName", "sclassName")
-                student.password = undefined;
-                student.examResult = undefined;
-                student.attendance = undefined;
-                res.send(student);
-            } else {
-                res.send({ message: "Invalid password" });
-            }
-        } else {
-            res.send({ message: "Student not found" });
+        let student = await Student.findOne({ rollNum: req.body.rollNum, name: req.body.studentName }).populate({
+            path: "attendance.subName",
+            select: "subName sessions"
+        });
+
+        if (!student) {
+            return res.status(404).json({ message: "Student not found" });
         }
+
+        const validated = await bcrypt.compare(req.body.password, student.password);
+        if (!validated) {
+            return res.status(400).json({ message: "Invalid password" });
+        }
+
+        // Check attendance limits for each subject
+        let exceededSubjects = [];
+        student.attendance.forEach(att => {
+            const subject = att.subName;
+            const attendedSessions = student.attendance.filter(a => a.subName._id.toString() === subject._id.toString()).length;
+
+            if (attendedSessions >= parseInt(subject.sessions)) {
+                exceededSubjects.push(subject.subName);
+            }
+        });
+
+        if (exceededSubjects.length > 0) {
+            return res.status(403).json({ message: `You have exceeded the session limits for: ${exceededSubjects.join(", ")}` });
+        }
+
+        student.password = undefined;
+        student.examResult = undefined;
+        student.attendance = undefined;
+
+        res.send(student);
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json({ error: err.message });
     }
 };
+
 
 const getStudents = async (req, res) => {
     try {

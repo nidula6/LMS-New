@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 // import Navbar from "../components/Navbar.js";
 // import Footer from "../components/Footer.js";
 
-
 export default function Profile() {
   const { currentUser, response, error } = useSelector((state) => state.user);
   if (response) { console.log(response) }
@@ -78,7 +77,7 @@ const school = currentUser.school;
                 {/* Class Name */}
                 <tr className="border-b">
                   <td className="px-6 py-4 text-gray-600 font-semibold">Class:</td>
-                  <td className="px-6 py-4 text-gray-500">{sclassName.sclassName}</td>
+                  <td className="px-6 py-4 text-gray-500">{sclassName.sclassname}</td>
                 </tr>
 
                 {/* Student Number */}

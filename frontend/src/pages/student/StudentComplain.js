@@ -31,10 +31,13 @@ const StudentComplain = () => {
     const submitHandler = (event) => {
         event.preventDefault()
         setLoader(true)
+        console.log("Submitting complaint:", fields);
         dispatch(addStuff(fields, address))
     };
 
     useEffect(() => {
+        console.log("Redux Status:", status);
+    console.log("Redux Error:", error);
         if (status === "added") {
             setLoader(false)
             setShowPopup(true)

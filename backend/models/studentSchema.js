@@ -22,6 +22,7 @@ const studentSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'admin',
         required: true,
+    
     },
     role: {
         type: String,
@@ -29,7 +30,6 @@ const studentSchema = new mongoose.Schema({
     },
     Birthdate: {
         type: Date,
-        default: () => new Date("2012-12-12")
     },
     
     Gender: {
@@ -38,18 +38,15 @@ const studentSchema = new mongoose.Schema({
     },
     Address: {
         type: String,
-        default: "Address"
     },
     Phone: {
         type: Number,
     },
     Email: {
         type: String,
-        default: "email@gmail.com"
     },
     ParentName: {
         type: String,
-        default: "Parent"
     },
     examResult: [
         {

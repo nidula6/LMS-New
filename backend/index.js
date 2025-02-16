@@ -8,6 +8,8 @@ const Routes = require("./routes/route.js")
 const path = require('path');
 
 
+app.use("/uploadPayment", express.static(path.join(__dirname, "uploadPayment")));
+
 const PORT = process.env.PORT || 5000
 
 dotenv.config();

@@ -151,7 +151,7 @@ const Payment = () => {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
 
-            alert('Assignment uploaded successfully!');
+            alert('Payment uploaded successfully!');
             console.log(response.data);
 
             // Clear form after submission
@@ -159,8 +159,8 @@ const Payment = () => {
             setDescription('');
             setFile(null);
         } catch (error) {
-            console.error('Error uploading assignment:', error.response?.data || error.message);
-            alert('Error uploading assignment.');
+            console.error('Error uploading Payment:', error.response?.data || error.message);
+            alert('Error uploading Payment.');
         }
     };
 

@@ -2,10 +2,13 @@ const Complain = require('../models/complainSchema.js');
 
 const complainCreate = async (req, res) => {
     try {
+        console.log("Received Complaint Data:", req.body);
         const complain = new Complain(req.body)
         const result = await complain.save()
+        console.log("Saved Complaint:", result);
         res.send(result)
     } catch (err) {
+        console.error("Error Saving Complaint:", err);
         res.status(500).json(err);
     }
 };

@@ -149,6 +149,20 @@ const ShowStudents = () => {
             })
     }
 
+    useEffect(() => {
+        const fetchPayments = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/studentpayments');
+                setPayments(response.data);
+            } catch (error) {
+                console.error('Error fetching assignments:', error);
+            }
+        };
+  
+        fetchPayments();
+    }, []);
+
+    
     const studentColumns = [
         { id: 'name', label: 'Name', minWidth: 170 },
         { id: 'rollNum', label: 'Student Number', minWidth: 100 },
@@ -205,18 +219,6 @@ const ShowStudents = () => {
         };
 
         
-    useEffect(() => {
-        const fetchPayments = async () => {
-            try {
-                const response = await axios.get('http://localhost:5000/studentpayments');
-                setPayments(response.data);
-            } catch (error) {
-                console.error('Error fetching assignments:', error);
-            }
-        };
-  
-        fetchPayments();
-    }, []);
 
         return (
             <>
@@ -380,9 +382,10 @@ const ShowStudents = () => {
 
         
             )}
+            <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} />
                 </>
             }
-            <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} />
+            
 
             {/* ---------------------------- */}
 

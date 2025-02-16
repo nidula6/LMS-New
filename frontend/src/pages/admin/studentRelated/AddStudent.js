@@ -12,6 +12,7 @@ const AddStudent = ({ situation }) => {
     const navigate = useNavigate()
     const params = useParams()
 
+  const { subjectDetails } = useSelector((state) => state.sclass);
     const userState = useSelector(state => state.user);
     const { status, currentUser, response, error } = userState;
     const { sclassesList } = useSelector((state) => state.sclass);
@@ -21,7 +22,7 @@ const AddStudent = ({ situation }) => {
     const [password, setPassword] = useState('');
     const [className, setClassName] = useState('');
     const [sclassName, setSclassName] = useState('');
-    const [Birthday, setBirthday] = useState('');
+    const [Birthdate, setBirthdate] = useState('');
     const [Gender, setGender] = useState('');
     const [Phone, setPhone] = useState('');
     const [Email, setEmail] = useState('');
@@ -30,6 +31,8 @@ const AddStudent = ({ situation }) => {
 
     const adminID = currentUser._id
     const role = "Student"
+    
+  const school = subjectDetails && subjectDetails.school
     const attendance = []
 
     useEffect(() => {
@@ -59,7 +62,9 @@ const AddStudent = ({ situation }) => {
         }
     }
 
-    const fields = { name, rollNum, password, sclassName, adminID, role, attendance }
+  
+    
+    const fields = { ParentName, name, rollNum, password, adminID, role,school, attendance ,Birthdate,Email,sclassName,Address}
 
     const submitHandler = (event) => {
         event.preventDefault()
@@ -115,8 +120,8 @@ const AddStudent = ({ situation }) => {
 
         <label>Birthday</label>
         <input className="registerInput" type="date"
-            value={Birthday}
-            onChange={(event) => setBirthday(event.target.value)}
+            value={Birthdate}
+            onChange={(event) => setBirthdate(event.target.value)}
             required />
 
         <label>Gender</label>
