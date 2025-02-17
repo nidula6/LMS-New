@@ -22,12 +22,14 @@ import AccountMenu from '../../components/AccountMenu';
 import { AppBar, Drawer } from '../../components/styles';
 import StudentAssignment from './StudentAssignment';
 
+import { useSelector } from 'react-redux';
 import Payment from './Payment';
 
 
 import Profile from "./Profile";  
 
 const StudentDashboard = () => {
+     const { currentUser, response, error } = useSelector((state) => state.user);
     const [open, setOpen] = useState(true);
     const toggleDrawer = () => {
         setOpen(!open);
@@ -58,7 +60,7 @@ const StudentDashboard = () => {
                             noWrap
                             sx={{ flexGrow: 1 }}
                         >
-                            Student Dashboard
+                            Student Dashboard {currentUser.name}
                         </Typography>
                         <AccountMenu />
                     </Toolbar>

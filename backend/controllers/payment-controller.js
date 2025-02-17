@@ -50,20 +50,6 @@ exports.uploadPayment = async (req, res) => {
 
 // ✅ Fetch assignments
 
-// exports.getPayment = async (req, res) => {
-//     try {
-//         // Fetch all payments and populate studentId with the student's name
-//         const payments = await Payment.find()
-//             .populate('studentId', 'name'); // Fetch student's name
-
-//         res.status(200).json(payments); // Send payments back as a JSON response
-//     } catch (error) {
-//         console.error('Error fetching payments:', error);
-//         res.status(500).json({ error: 'Internal Server Error' });
-//     }
-// };
-
-
 exports.getPayment = async (req, res) => {
     try {
         // Fetch all payments and populate studentId with the student's name
@@ -77,6 +63,38 @@ exports.getPayment = async (req, res) => {
     }
 };
 
+
+exports.getPayments = async (req, res) => {
+    try {
+        // Fetch all payments and populate studentId with the student's name
+        const payments = await Payment.find()
+            .populate('studentId', 'name'); // Fetch student's name
+
+        res.status(200).json(payments); // Send payments back as a JSON response
+    } catch (error) {
+        console.error('Error fetching payments:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+// exports.getPayment = async (req, res) => {
+//     try {
+//         let payments = await Payment.find({ studentId: req.params.id });
+
+//         if (payments.length > 0) {
+//             payments = payments.map((payment) => {
+//                 return { ...payment._doc, password: undefined }; // Ensure correct reference
+//             });
+
+//             return res.json({ length: payments.length, data: payments });
+//         } else {
+//             return res.json({ message: "No payments found", length: 0 });
+//         }
+//     } catch (err) {
+//         console.error("Error fetching payments:", err);
+//         return res.status(500).json({ error: err.message });
+//     }
+// };
 
 module.exports.spayment = spayment;
  

@@ -51,6 +51,6 @@
 //     getError,
 //     doneSuccess,
 //     postDone
-// } = paymentList.actions;
+// } = paymentSlice.actions;
 
-// export const paymentReducer = paymentList.reducer;
+// export const paymentReducer = paymentSlice.reducer;

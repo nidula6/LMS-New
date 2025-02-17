@@ -2,28 +2,31 @@ const Complain = require('../models/complainSchema.js');
 
 const complainCreate = async (req, res) => {
     try {
-        console.log("Received Complaint Data:", req.body);
-        const complain = new Complain(req.body)
-        const result = await complain.save()
-        console.log("Saved Complaint:", result);
-        res.send(result)
+        const newComplain = new Complain(req.body);
+        const savedComplain = await newComplain.save();
+        res.status(201).json(savedComplain);
     } catch (err) {
-        console.error("Error Saving Complaint:", err);
-        res.status(500).json(err);
+        res.status(500).json({ error: "Error saving complaint" });
     }
 };
 
 const complainList = async (req, res) => {
     try {
-        let complains = await Complain.find({ school: req.params.id }).populate("user", "name");
-        if (complains.length > 0) {
-            res.send(complains)
-        } else {
-            res.send({ message: "No complains found" });
-        }
+      console.log("Fetching complaints for school ID:", req.params.id); // Log the school ID
+      let complains = await Complain.find({ school: req.params.id }).populate("user", "name");
+      
+      console.log("Complaints found:", complains); // Log the result
+      
+      if (complains.length === 0) {
+        return res.status(404).json({ message: "No complaints found" });
+      }
+  
+      res.json(complains);  // Send the list of complaints as the response
     } catch (err) {
-        res.status(500).json(err);
+      console.error("Error fetching complaints:", err); // Log the error
+      res.status(500).json(err);
     }
-};
+  };
+  
 
 module.exports = { complainCreate, complainList };

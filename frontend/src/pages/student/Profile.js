@@ -58,6 +58,9 @@ const school = currentUser.school;
     <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
       <div className="px-6">
         <div className="text-center mt-12">
+        <h3 className="text-4xl font-italic leading-normal mb-2 text-gray-800">
+            Hi,
+          </h3>
           <h3 className="text-4xl font-semibold leading-normal mb-2 text-gray-800">
             {currentUser.name}
           </h3>
@@ -74,11 +77,7 @@ const school = currentUser.school;
                 </tr>
               </thead>
               <tbody>
-                {/* Class Name */}
-                <tr className="border-b">
-                  <td className="px-6 py-4 text-gray-600 font-semibold">Class:</td>
-                  <td className="px-6 py-4 text-gray-500">{sclassName.sclassname}</td>
-                </tr>
+                
 
                 {/* Student Number */}
                 <tr className="border-b">
@@ -144,10 +143,15 @@ const school = currentUser.school;
                   <td className="px-6 py-4 text-gray-600 font-semibold">
                     <div className="flex items-center">
                       <i className="fas fa-genderless mr-2 text-lg text-gray-500"></i>
-                      School:
+                      Address:
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-gray-500">{school.schoolName}</td>
+                  <td className="px-6 py-4 text-gray-500">{currentUser.Address}</td>
+                </tr>
+                {/* Class Name */}
+                <tr className="border-b">
+                  <td className="px-6 py-4 text-gray-600 font-semibold">Phone Number:</td>
+                  <td className="px-6 py-4 text-gray-500">{currentUser.Phone}</td>
                 </tr>
               </tbody>
             </table>

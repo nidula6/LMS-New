@@ -8,15 +8,12 @@ const complainSchema = new mongoose.Schema({
     },
     date: {
         type: Date,
-        required: true
+        required: true,
+        default: Date.now // Automatically sets the current date if not provided
     },
     complaint: {
         type: String,
         required: true
-    },
-    school: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'admin',
     }
 });
 

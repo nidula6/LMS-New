@@ -36,6 +36,8 @@ const { teacherRegister, teacherLogIn, getTeachers, getTeacherDetail, deleteTeac
 
 
 
+
+
 // Admin
 router.post('/AdminReg', adminRegister);
 router.post('/AdminLogin', adminLogIn);
@@ -76,7 +78,6 @@ router.post('/TeacherLogin', teacherLogIn)
 
 router.get("/Teachers/:id", getTeachers)
 router.get("/Teacher/:id", getTeacherDetail)
-
 router.delete("/Teachers/:id", deleteTeachers)
 router.delete("/TeachersClass/:id", deleteTeachersByClass)
 router.delete("/Teacher/:id", deleteTeacher)
@@ -98,9 +99,8 @@ router.put("/Notice/:id", updateNotice)
 
 // Complain
 
-router.post('/ComplainCreate', complainCreate);
-
-router.get('/ComplainList/:id', complainList);
+router.post('/complaints', complainCreate);
+router.get('/complaints/:schoolId', complainList);
 
 // Sclass
 

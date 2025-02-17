@@ -7,14 +7,16 @@ import { getAllComplains } from '../../../redux/complainRelated/complainHandle';
 import TableTemplate from '../../../components/TableTemplate';
 
 const SeeComplains = () => {
-
-  const label = { inputProps: { 'aria-label': 'Checkbox demo' } };  const dispatch = useDispatch();
+  const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+  const dispatch = useDispatch();
   const { complainsList, loading, error, response } = useSelector((state) => state.complain);
-  const { currentUser } = useSelector(state => state.user)
+  const { currentUser } = useSelector(state => state.user);
 
   useEffect(() => {
-    dispatch(getAllComplains(currentUser._id, "Complain"));
-  }, [currentUser._id, dispatch]);
+    if (currentUser?._id) {
+      dispatch(getAllComplains(currentUser._id, "Complain"));
+    }
+  }, [currentUser?._id, dispatch]);
 
   if (error) {
     console.log(error);
@@ -27,13 +29,17 @@ const SeeComplains = () => {
   ];
 
   const complainRows = complainsList && complainsList.length > 0 && complainsList.map((complain) => {
-    const date = new Date(complain.date);
+    // Safely access complain.user._id and complain.user.name
+    const userName = complain?.user?.name || "Unknown User";
+    const complaintText = complain?.complaint || "No Complaint Provided";
+    const date = new Date(complain?.date);
     const dateString = date.toString() !== "Invalid Date" ? date.toISOString().substring(0, 10) : "Invalid Date";
+
     return {
-      user: complain.user.name,
-      complaint: complain.complaint,
+      user: userName,
+      complaint: complaintText,
       date: dateString,
-      id: complain._id,
+      id: complain?._id || "N/A",  // Ensure complain._id exists
     };
   });
 
@@ -53,7 +59,7 @@ const SeeComplains = () => {
         <>
           {response ?
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
-              No Complains Right Now
+              No Complaints Right Now
             </Box>
             :
             <Paper sx={{ width: '100%', overflow: 'hidden' }}>

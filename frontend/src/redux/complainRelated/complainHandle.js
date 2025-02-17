@@ -1,22 +1,25 @@
 import axios from 'axios';
-import {
-    getRequest,
-    getSuccess,
-    getFailed,
-    getError
-} from './complainSlice';
+import { getRequest, getSuccess, getError } from './complainSlice';
 
-export const getAllComplains = (id, address) => async (dispatch) => {
-    dispatch(getRequest());
+export const getAllComplains = (schoolId) => async (dispatch) => {
+  dispatch(getRequest());
+  try {
+    const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/complaints/${schoolId}`);
+    dispatch(getSuccess(response.data));
+  } catch (error) {
+    // Extract only the message to store in state
+    const errorMessage = error.response?.data?.message || "An error occurred";
+    dispatch(getError(errorMessage)); // Dispatch only the string error message
+  }
+};
 
-    try {
-        const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/${address}List/${id}`);
-        if (result.data.message) {
-            dispatch(getFailed(result.data.message));
-        } else {
-            dispatch(getSuccess(result.data));
-        }
-    } catch (error) {
-        dispatch(getError(error));
-    }
-}
+export const submitComplaint = (complaintData) => async (dispatch) => {
+  try {
+    await axios.post(`${process.env.REACT_APP_BASE_URL}/complaints`, complaintData);
+    dispatch(getAllComplains(complaintData.school));
+  } catch (error) {
+    // Extract error message from AxiosError and dispatch it
+    const errorMessage = error.response?.data?.message || "An error occurred";
+    dispatch(getError(errorMessage)); // Dispatch the error message only
+  }
+};

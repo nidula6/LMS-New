@@ -4,8 +4,6 @@
 //     getSuccess,
 //     getFailed,
 //     getError,
-//     postDone,
-//     doneSuccess
 // } from './paymentSlice';
 
 // export const getAllPayment = (id) => async (dispatch) => {

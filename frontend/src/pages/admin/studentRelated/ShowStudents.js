@@ -324,7 +324,7 @@ const ShowStudents = () => {
         Student Payment Details
       </h2>
 
-      {/* No Assignments Message */}
+      {/* No payment Message */}
       {payments.length === 0 ? (
         <p className="text-gray-600 text-center">No Payments available</p>
       ) : (
