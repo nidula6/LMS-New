@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import PaymentIcon from "@mui/icons-material/Payment";
 import AnnouncementOutlinedIcon from '@mui/icons-material/AnnouncementOutlined';
 import ClassOutlinedIcon from '@mui/icons-material/ClassOutlined';
 import AssignmentIcon from '@mui/icons-material/Assignment';
@@ -55,7 +56,7 @@ const StudentSideBar = () => {
 
              <ListItemButton component={Link} to="/Student/payment">
                 <ListItemIcon>
-                    <AccountCircleOutlinedIcon color={location.pathname.startsWith("/Student/payment") ? 'primary' : 'inherit'} />
+                    <PaymentIcon color={location.pathname.startsWith("/Student/payment") ? 'primary' : 'inherit'} />
                 </ListItemIcon>
                 <ListItemText primary="Payment" />
              </ListItemButton>

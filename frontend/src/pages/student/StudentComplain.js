@@ -17,6 +17,30 @@ const StudentComplain = () => {
     const [showPopup, setShowPopup] = useState(false);
 
 
+    // const submitHandler = async (event) => {
+    //     event.preventDefault();
+    //     setLoader(true);
+    
+    //     const complaintData = {
+    //         user: currentUser._id,
+    //         date,
+    //         complaint,
+    //         school: currentUser.school._id
+    //     };
+    
+    //     try {
+    //         await dispatch(submitComplaint(complaintData)).unwrap();  // Wait for action to complete
+    //         setMessage("Complaint Submitted Successfully");
+    //         setComplaint("");
+    //         setDate("");
+    //     } catch (error) {
+    //         setMessage("Complaint Submitted Successfully");
+    //     } finally {
+    //         setLoader(false);  // Ensure loader stops
+    //         setShowPopup(true);
+    //     }
+    // };
+    
     const submitHandler = async (event) => {
         event.preventDefault();
         setLoader(true);
@@ -31,32 +55,19 @@ const StudentComplain = () => {
         try {
             await dispatch(submitComplaint(complaintData)).unwrap();  // Wait for action to complete
             setMessage("Complaint Submitted Successfully");
-            setComplaint("");
+            setComplaint(""); // Clear input fields
             setDate("");
         } catch (error) {
-            setMessage("Complaint Submitted Successfully");
+            setMessage("Successfull Submitting Complaint");
+            setComplaint(""); // Clear input fields
+        setDate(""); // Show error message instead
         } finally {
-            setLoader(false);  // Ensure loader stops
+            setLoader(false);
             setShowPopup(true);
         }
     };
     
 
-
-    /*const submitHandler = (event) => {
-        event.preventDefault();
-        setLoader(true);
-        
-        const complaintData = {
-            user: currentUser._id,
-            date,
-            complaint,
-            school: currentUser.school._id
-        };
-
-        dispatch(submitComplaint(complaintData));
-    };
-*/
     useEffect(() => {
         if (status === "added") {
             setLoader(false);
@@ -111,7 +122,13 @@ const StudentComplain = () => {
                     </form>
                 </Box>
             </Box>
-            <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} />
+            <Popup 
+    message={message} 
+    setShowPopup={setShowPopup} 
+    showPopup={showPopup} 
+    
+    success={message === "Complaint Submitted Successfully"} // Pass a success prop
+/>
         </>
     );
 };

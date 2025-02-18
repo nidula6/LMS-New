@@ -102,16 +102,18 @@ const StudentDashboard = () => {
 
 export default StudentDashboard
 
+
 const styles = {
     boxStyled: {
-        backgroundColor: (theme) =>
-            theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url('https://img.freepik.com/free-photo/desk-workspace-with-various-elements_23-2148043273.jpg')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
         flexGrow: 1,
         height: '100vh',
         overflow: 'auto',
     },
+
     toolBarStyled: {
         display: 'flex',
         alignItems: 'center',
@@ -127,4 +129,4 @@ const styles = {
             display: 'none',
         },
     },
-}
+};
