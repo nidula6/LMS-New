@@ -2,7 +2,7 @@ const router = require('express').Router();
 const assignmentController = require('../controllers/assignment-controller'); 
 const assignment2Controller = require('../controllers/assignment2-controller');
 const paymentcontroller = require('../controllers/payment-controller')
-const { createAppointment, getAppointments } = require('../controllers/appointment-controller');
+const { createAppointment, getAppointments ,deleteAppointment  } = require('../controllers/appointment-controller');
 
 const upload = assignmentController.upload; //teacher upload assginment
 const supload = assignment2Controller.supload; //student upload answers
@@ -12,7 +12,7 @@ const spayment = paymentcontroller.spayment; // Corrected import
 const { adminRegister, adminLogIn, getAdminDetail} = require('../controllers/admin-controller.js');
 
 const { sclassCreate, sclassList, deleteSclass, deleteSclasses, getSclassDetail, getSclassStudents } = require('../controllers/class-controller.js');
-const { complainCreate, complainList } = require('../controllers/complain-controller.js');
+const { complainCreate, complainList ,deleteComplain} = require('../controllers/complain-controller.js');
 const { noticeCreate, noticeList, deleteNotices, deleteNotice, updateNotice } = require('../controllers/notice-controller.js');
 const {
     studentRegister,
@@ -99,6 +99,7 @@ router.put("/Notice/:id", updateNotice)
 
 // Complain
 
+router.delete("/complaints/:id", deleteComplain)
 router.post('/complaints', complainCreate);
 router.get('/complaints/:schoolId', complainList);
 
@@ -148,7 +149,7 @@ router.post('/payment/spayment', spayment.single('file'), paymentcontroller.uplo
 //route to fetch payment receipts
 router.get('/studentpayments', paymentcontroller.getPayment);
 
-
+router.delete("/appoinments/:id", deleteAppointment)
 // Route to submit an appointment request
 router.post('/appointments', createAppointment);
 

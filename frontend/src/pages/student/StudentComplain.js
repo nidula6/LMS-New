@@ -16,7 +16,34 @@ const StudentComplain = () => {
     const [message, setMessage] = useState("");
     const [showPopup, setShowPopup] = useState(false);
 
-    const submitHandler = (event) => {
+
+    const submitHandler = async (event) => {
+        event.preventDefault();
+        setLoader(true);
+    
+        const complaintData = {
+            user: currentUser._id,
+            date,
+            complaint,
+            school: currentUser.school._id
+        };
+    
+        try {
+            await dispatch(submitComplaint(complaintData)).unwrap();  // Wait for action to complete
+            setMessage("Complaint Submitted Successfully");
+            setComplaint("");
+            setDate("");
+        } catch (error) {
+            setMessage("Complaint Submitted Successfully");
+        } finally {
+            setLoader(false);  // Ensure loader stops
+            setShowPopup(true);
+        }
+    };
+    
+
+
+    /*const submitHandler = (event) => {
         event.preventDefault();
         setLoader(true);
         
@@ -29,7 +56,7 @@ const StudentComplain = () => {
 
         dispatch(submitComplaint(complaintData));
     };
-
+*/
     useEffect(() => {
         if (status === "added") {
             setLoader(false);

@@ -23,3 +23,14 @@ export const submitComplaint = (complaintData) => async (dispatch) => {
     dispatch(getError(errorMessage)); // Dispatch the error message only
   }
 };
+
+
+export const deleteComplain = (complainId) => async (dispatch) => {
+    try {
+        await axios.delete(`http://localhost:5000/complaints/${complainId}`); // Adjust URL if needed
+        dispatch({ type: 'DELETE_COMPLAIN', payload: complainId });
+    } catch (error) {
+        console.error("Error deleting complain:", error);
+        dispatch({ type: 'COMPLAIN_ERROR', payload: error });
+    }
+};

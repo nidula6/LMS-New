@@ -24,3 +24,18 @@ exports.getAppointments = async (req, res) => {
 };    
 
 
+
+exports.deleteAppointment = async (req, res) => {
+    try {
+        const result = await Appointment.findByIdAndDelete(req.params.id);
+
+        if (!result) {
+            return res.status(404).json({ message: "Appointment not found" });
+        }
+
+        res.status(200).json({ message: "Appointment deleted successfully", deletedAppointment: result });
+    } catch (error) {
+        console.error("Error deleting appointment:", error);
+        res.status(500).json({ message: "Error deleting appointment", error });
+    }
+};

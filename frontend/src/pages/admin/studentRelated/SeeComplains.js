@@ -5,12 +5,27 @@ import {
 } from '@mui/material';
 import { getAllComplains } from '../../../redux/complainRelated/complainHandle';
 import TableTemplate from '../../../components/TableTemplate';
+import { IconButton } from '@mui/material'; // Import IconButton
+import SpeedDialTemplate from '../../../components/SpeedDialTemplate'; // Adjust path if needed
+import axios from 'axios';
+import DeleteIcon from "@mui/icons-material/Delete";
+import { deleteComplain } from '../../../redux/complainRelated/complainHandle'; // Adjust path as needed
 
+import { deleteUser } from '../../../redux/userRelated/userHandle';
 const SeeComplains = () => {
-  const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+
   const dispatch = useDispatch();
   const { complainsList, loading, error, response } = useSelector((state) => state.complain);
   const { currentUser } = useSelector(state => state.user);
+
+  const deleteHandler = (deleteID) => {
+    dispatch(deleteComplain(deleteID)) // Call the correct delete action for complaints
+        .then(() => {
+            dispatch(getAllComplains(currentUser._id, "complaints"));
+        })
+        .catch((err) => console.error("Error deleting complaint:", err));  // Handle any errors
+}
+
 
   useEffect(() => {
     if (currentUser?._id) {
@@ -21,7 +36,10 @@ const SeeComplains = () => {
   if (error) {
     console.log(error);
   }
-
+  const actions = [
+    { icon: <DeleteIcon />, name: 'Delete', action: () => console.log("Delete clicked") },
+  ];
+  
   const complainColumns = [
     { id: 'user', label: 'User', minWidth: 170 },
     { id: 'complaint', label: 'Complaint', minWidth: 100 },
@@ -42,15 +60,18 @@ const SeeComplains = () => {
       id: complain?._id || "N/A",  // Ensure complain._id exists
     };
   });
-
+  
   const ComplainButtonHaver = ({ row }) => {
     return (
       <>
-        <Checkbox {...label} />
+         <IconButton onClick={() => deleteHandler(row.id, "Complain")}> 
+            <DeleteIcon color="error" />
+         </IconButton>
       </>
     );
-  };
+};
 
+  
   return (
     <>
       {loading ?
@@ -63,10 +84,13 @@ const SeeComplains = () => {
             </Box>
             :
             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-              {Array.isArray(complainsList) && complainsList.length > 0 &&
-                <TableTemplate buttonHaver={ComplainButtonHaver} columns={complainColumns} rows={complainRows} />
-              }
-            </Paper>
+                          {Array.isArray(complainsList) && complainsList.length > 0 && (
+  <TableTemplate buttonHaver={ComplainButtonHaver} columns={complainColumns} rows={complainRows} />
+)}
+
+
+                            <SpeedDialTemplate actions={actions} />
+                        </Paper>
           }
         </>
       }
