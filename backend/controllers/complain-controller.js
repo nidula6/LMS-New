@@ -28,5 +28,19 @@ const complainList = async (req, res) => {
     }
   };
   
+  const deleteComplain = async (req, res) => {
+    try {
+        const result = await Complain.findByIdAndDelete(req.params.id);
 
-module.exports = { complainCreate, complainList };
+        if (!result) {
+            return res.status(404).json({ message: "Complaint not found" });
+        }
+
+        res.status(200).json({ message: "Complaint deleted successfully", deletedComplain: result });
+    } catch (error) {
+        console.error("Error deleting complaint:", error);
+        res.status(500).json({ message: "Error deleting complaint", error });
+    }
+};
+
+module.exports = { complainCreate, complainList , deleteComplain};
